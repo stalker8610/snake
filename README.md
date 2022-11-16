@@ -8,7 +8,7 @@
 
 Simple oldschool game 'Snake' for console, may be played just in Node.js terminal or on Windows Command Prompt (cmd.exe)
 
-<img src="demo.gif" width="80%"></p>
+<img src="demo.gif" width="100%"></p>
 
 
 
@@ -37,9 +37,9 @@ Note: it's not recommended to resize terminal window during the play due possibi
 ## Project structure
 
 Program consist of 3 main classes:
-- **Game** - describes game environment such as game loop, user's control maintance and graphical output. See <a href='Game.js'>*Game.js*</a>
-- **Snake** - describes structure of snake's body with it's fractures and directions of movement for each fracture (without any graphical output). This class used by *Game* class. See <a href='Snake.js'>*Snake.js*</a>
-- **Interface** - describes input and output interface used by *Game* class, see <a href='Interface.js'>*Interface.js*</a>
+- **Game** - describes game environment such as game loop, user's control maintance and graphical output. See <a href='game.js'>*game.js*</a>
+- **Snake** - describes structure of snake's body with it's fractures and directions of movement for each fracture (without any graphical output). This class used by *Game* class. See <a href='snake.js'>*snake.js*</a>
+- **Interface** - describes input and output interface used by *Game* class, see <a href='interface.js'>*interface.js*</a>
 
 ## Dependencies and other requirements
 
