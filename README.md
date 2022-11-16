@@ -8,7 +8,7 @@
 
 Simple oldschool game 'Snake' for console, may be played just in Node.js terminal or on Windows Command Prompt (cmd.exe)
 
-<img src="demo.gif" width="80%"></p>
+<img src="demo.gif" width="100%"></p>
 
 
 
