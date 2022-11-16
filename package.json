@@ -1,0 +1,17 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "console game 'Snake'",
+  "main": "index.js",
+  "type": "module",
+   "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Voronin Anton <stalker8610@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.1.2"
+  }
+}
