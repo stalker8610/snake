@@ -25,7 +25,7 @@ const ioInterface = new Interface(process.stdin, process.stdout);
 
     const [windowWidth, windowHeight] = ioInterface.output.getWindowSize();
     if (!(windowWidth >= 40 && windowHeight >= 15)) {
-        console.log('Terminal window is to small for game, please resize and try again...');
+        console.log('Terminal window is too small for game, please resize and try again...');
         process.exit(1);
     }
 
