@@ -137,7 +137,7 @@ export class Game extends EventEmitter {
                 const message = (counter % 2) ? ''
                     : (counter == 0) ? 'GO!!!' : `START WITHIN ${counter / 2} SEC`;
 
-                this.printServiceMessage({ ...Game.serviceMessages.intro, message });
+                this.printServiceMessage(styledMessage(message, Game.serviceMessages.intro.style));
 
                 if (counter == 0) {
                     clearInterval(counterTimer);
@@ -160,7 +160,7 @@ export class Game extends EventEmitter {
             // console.log(key);
 
             if (key.ctrl && key.name === 'c') {
-                this.emit('exit');
+                this.destroy();
             }
             else if (this.#gameStarted) {
                 if (key.name === 'p') {
@@ -227,7 +227,7 @@ export class Game extends EventEmitter {
                 if (cheerIndex > this.#currentLevel) {
                     this.#currentLevel = cheerIndex;
                     const message = Game.cheerPhrasesTemplate[cheerIndex];
-                    this.printServiceMessage({ ...Game.serviceMessages.cheer, message });
+                    this.printServiceMessage(styledMessage(message, Game.serviceMessages.cheer.style));
                 }
 
                 this.speedUp();
@@ -275,7 +275,7 @@ export class Game extends EventEmitter {
         }
     }
 
-    end() {
+    gameOver() {
 
         this.#interface.input.removeListener('keypress', this.keypressListener);
         this.#gameStarted = false;
@@ -287,10 +287,10 @@ export class Game extends EventEmitter {
             this.keypressListener = async (str, key) => {
 
                 if (key.ctrl && key.name === 'c') {
-                    this.emit('exit');
+                    this.destroy();
                 }
                 else if (key.name == 'n') {
-                    this.emit('exit');
+                    this.destroy();
                 }
                 else if (key.name == 'y') {
 
@@ -309,6 +309,28 @@ export class Game extends EventEmitter {
 
             this.#interface.printAt(0, this.#field.height + 2, 'Try again?.. [y/n]');
         }, 1000);
+
+    }
+
+    destroy() {
+
+        if (this.keypressListener) {
+            this.#interface.input.removeListener('keypress', this.keypressListener);
+        }
+
+        if (this.#pauseTimer) {
+            clearInterval(this.#pauseTimer);
+        }
+
+        if (this.#loopTimer) {
+            clearTimeout(this.#loopTimer);
+        }
+
+        if (this.#crashTimer) {
+            clearInterval(this.#crashTimer);
+        }
+
+        this.emit('exit');
 
     }
 
@@ -337,7 +359,7 @@ export class Game extends EventEmitter {
 
         if (crashHappened) {
             this.crashSnake();
-            this.end();
+            this.gameOver();
         }
 
         return crashHappened;
@@ -444,8 +466,8 @@ export class Game extends EventEmitter {
     drawResultsField() {
         this.#interface.printAt(this.#field.width + 3, 0, `Your score:`);
         this.#interface.printAt(this.#field.width + 3, 2, `Note that our snake:`);
-        this.#interface.printAt(this.#field.width+ 3 + 2, 3, `- ${chalk.yellow('likes')} yellow cookies`);
-        this.#interface.printAt(this.#field.width+ 3 + 2, 4, `- ${chalk.red('afraid')} of red obstacles!`);
+        this.#interface.printAt(this.#field.width + 3 + 2, 3, `- ${chalk.yellow('likes')} yellow cookies`);
+        this.#interface.printAt(this.#field.width + 3 + 2, 4, `- ${chalk.red('afraid')} of red obstacles!`);
     }
 
     printScore() {
