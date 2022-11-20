@@ -99,15 +99,15 @@ export class Game extends EventEmitter {
 
     }
 
-    createSnake(initialSnakeLength) {
+    createSnake() {
 
         let xPos = Math.ceil(this.#field.width / 2);
         if (xPos % 2) xPos--; //even required
-        let yPos = Math.floor((this.#field.height + initialSnakeLength) / 2);
+        let yPos = Math.floor((this.#field.height + Game.initialSnakeLength) / 2);
 
-        this.#snake = new Snake(initialSnakeLength, xPos, yPos);
+        this.#snake = new Snake(Game.initialSnakeLength, xPos, yPos);
 
-        for (let i = 0; i < initialSnakeLength; i++) {
+        for (let i = 0; i < Game.initialSnakeLength; i++) {
             this.#interface.printAt(xPos, yPos - i, Game.snakeBodyView);
         }
 
@@ -184,7 +184,7 @@ export class Game extends EventEmitter {
         this.drawMainField();
         this.drawResultsField();
         this.printScore();
-        this.createSnake(Game.initialSnakeLength);
+        this.createSnake();
         this.putCookie(Game.initialCookiesCount);
 
         await this.showIntro(Game.timeToStartInSec);
@@ -235,6 +235,9 @@ export class Game extends EventEmitter {
 
             }
             this.#loopTimer = setTimeout(this.gameLoop.bind(this), this.#interval);
+        } else {
+            this.crashSnake();
+            this.gameOver();
         }
     }
 
@@ -355,11 +358,6 @@ export class Game extends EventEmitter {
                     break;
                 }
             }
-        }
-
-        if (crashHappened) {
-            this.crashSnake();
-            this.gameOver();
         }
 
         return crashHappened;
